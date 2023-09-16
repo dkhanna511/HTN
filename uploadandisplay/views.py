@@ -4,7 +4,7 @@ from .models import ImageModel
 # import cv2
 # import numpy as np
 import os
-
+# TO RETRIEVE IMAGE NAME, USE image.name
 def home(request):
     if request.method == 'POST':
         form = myform(request.POST, request.FILES)
@@ -18,5 +18,6 @@ def home(request):
     latest_image = ImageModel.objects.last()
     
     context = {'form': form, 'latest_image': latest_image}
+
     
     return render(request, 'uploadandisplay/home.html', context)

@@ -12,33 +12,48 @@
       crossorigin="anonymous"
     />
 
-    <title>Image Upload And Display</title>
+    <title>upload/display</title>
+    {% comment %}
     <style>
       img {
         width: 400px;
         height: 400px;
       }
     </style>
+    {% endcomment %}
+    <link href="design.css" rel="stylesheet" />
   </head>
   <body>
+    <div id="header">
+      <h1>Explore the World of Languages</h1>
+    </div>
+    <div id="intro">
+      <p>An immersive language learning experience for English to French</p>
+    </div>
     <div class="container py-4">
-      <div class="bg-dark text-center my-4">
-        <h1 class="text-center text-light">Upload Image</h1>
+      <div class="text-center my-4">
+        <h1 class="text-center">Upload Image</h1>
         <form action="" enctype="multipart/form-data" method="POST">
           {% csrf_token %} {{form}}
-          <input type="submit" value="Translate" class="btn btn-primary" />
+          <input type="submit" value="Translate" class="styled" />
         </form>
       </div>
       <div>
         {% if latest_image %}
         <img
           src="{{ latest_image.Image.url }}"
-          alt="{{ latest_image.description }}"
+          alt="{{
+        latest_image.description }}"
         />
         {% else %}
         <p>No image available.</p>
         {% endif %}
       </div>
+      {% comment %}
+      <li>
+        <a href="">{{ image.image.name }}</a>
+      </li>
+      {% endcomment %}
     </div>
   </body>
 </html>

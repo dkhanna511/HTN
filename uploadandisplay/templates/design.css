@@ -1,0 +1,114 @@
+body {
+  width: 1512px;
+  height: 982px;
+  background: #5a7cac;
+}
+
+.h1 {
+  color: #fff;
+}
+
+header {
+  flex-shrink: 0;
+  margin-left: 39em;
+  margin-top: 4em;
+  color: #fff;
+  font-family: Monda;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 614px;
+  height: 64px;
+}
+
+intro {
+  width: 617px;
+  height: 41px;
+  flex-shrink: 0;
+  color: #aeefe5;
+  font-family: Monda;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 39em;
+  margin-top: 4em;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-input {
+  width: 350px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: -3px -3px 7px rgba(94, 104, 121, 0.377),
+    3px 3px 7px rgba(94, 104, 121, 0.377);
+}
+
+.form-input input {
+  display: none;
+}
+
+.form-input label {
+  display: block;
+  width: 45%;
+  height: 45px;
+  margin-left: 25%;
+  line-height: 50px;
+  text-align: center;
+  background: #1172c2;
+
+  color: #fff;
+  font-size: 15px;
+  font-family: "Open Sans", sans-serif;
+  text-transform: Uppercase;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-input img {
+  width: 100%;
+  display: none;
+
+  margin-bottom: 30px;
+}
+
+{% comment %} .styled {
+  width: 287px;
+  height: 43px;
+  flex-shrink: 0;
+  border: 0;
+  line-height: 2.5;
+  margin-left: 39em;
+  margin-top: 4em;
+  padding: 0 20px;
+  font-size: 1rem;
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 21.5px;
+  background: #aeefe5;
+  background-image: linear-gradient(
+    to top left,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2) 30%,
+    rgba(0, 0, 0, 0)
+  );
+  box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+    inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.styled:hover {
+  background-color: #c5e0de;
+}
+
+.styled:active {
+  box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+} {% endcomment %}
