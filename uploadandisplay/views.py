@@ -19,13 +19,14 @@ with open(yaml_file_path, 'r') as file:
 
 
 def get_yolo_output(results, images):
+    image_with_rectangle = None
     for result, image in zip(results, images):
         boxes = result.boxes  # Boxes object for bbox outputs
         masks = result.masks  # Masks object for segmentation masks outputs
         keypoints = result.keypoints  # Keypoints object for pose outputs
         probs = result.probs  # Probs object for classification outputs
         img = cv2.imread(image)
-        # print(" image widht is : {} and image height is : {}".format(img.shape[0], img.shape[1]))
+        print(" image widht is : {} and image height is : {}".format(img.shape[0], img.shape[1]))
         # exit(0)
         # cv2.imshow('output_frame', img)
         # cv2.waitKey(0)
@@ -56,14 +57,15 @@ model = YOLO('yolov8n.pt')  # pretrained YOLOv8n model
 
 def home(request):
     images = []
-
+    results = []
     if request.method == 'POST':
         form = myform(request.POST, request.FILES)
         
         if form.is_valid():
             for image in request.FILES.getlist('Image'):
                 images = [os.path.join("/media/dheeraj/New_Volume/Waterloo-Work/HTN/media/images/", image.name)]
-                results = model(images)
+                if os.path.exists(images[0]):
+                    results = model(images)
                 ImageModel.objects.create(Image=image)
 
     else:
@@ -71,33 +73,38 @@ def home(request):
     
     # Fetch the latest uploaded image
     # image_model = ImageModel.objects.get(pk=)
-
     latest_image = ImageModel.objects.last()
-    if latest_image:
-        # print("type of latest image", type(latest_image))
-        # Open the image using PIL
-        image_pil = Image.open(latest_image.Image.path)
-        # Convert PIL image to NumPy array
-        image_np = np.array(image_pil)
-        # Convert from BGR to RGB (if needed)
-        if image_np.shape[-1] == 3:  # Check if the image has 3 channels (BGR)
-            image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-        # Perform OpenCV operations on the NumPy array
-        # top_left = (100, 100)
-        # bottom_right = (200, 200)
-        # color = (255, 0, 0)  # Red
-        # thickness = 2
-        image_with_rectangle = get_yolo_output(results, images)
-        # Convert NumPy array back to PIL image
-        image_with_rectangle_pil = Image.fromarray(image_with_rectangle)
-        # Save the modified image to a BytesIO object
-        output_buffer = BytesIO()
-        image_with_rectangle_pil.save(output_buffer, format="PNG")
-        # Create an InMemoryUploadedFile from the BytesIO object
-        output_buffer.seek(0)
-        modified_image = InMemoryUploadedFile(output_buffer, None, "new_image.png", "image/png", output_buffer.getbuffer().nbytes, None)
-        # Create a new ImageModel instance with the modified image
-        image_model = ImageModel(Image=modified_image)
-        image_model.save()
-    context = {'form': form, 'latest_image': image_model if latest_image else None}
+        
+    try:
+        if latest_image:
+            # print("type of latest image", type(latest_image))
+            # Open the image using PIL
+            image_pil = Image.open(latest_image.Image.path)
+            # Convert PIL image to NumPy array
+            image_np = np.array(image_pil)
+            # Convert from BGR to RGB (if needed)
+            if image_np.shape[-1] == 3:  # Check if the image has 3 channels (BGR)
+                image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
+            # Perform OpenCV operations on the NumPy array
+            # top_left = (100, 100)
+            # bottom_right = (200, 200)
+            # color = (255, 0, 0)  # Red
+            # thickness = 2
+            image_with_rectangle = get_yolo_output(results, images)
+            # Convert NumPy array back to PIL image
+            image_with_rectangle_pil = Image.fromarray(image_with_rectangle)
+            # Save the modified image to a BytesIO object
+            output_buffer = BytesIO()
+            image_with_rectangle_pil.save(output_buffer, format="PNG")
+            # Create an InMemoryUploadedFile from the BytesIO object
+            output_buffer.seek(0)
+            modified_image = InMemoryUploadedFile(output_buffer, None, "new_image.png", "image/png", output_buffer.getbuffer().nbytes, None)
+            # Create a new ImageModel instance with the modified image
+            image_model = ImageModel(Image=modified_image)
+            image_model.save()
+        context = {'form': form, 'latest_image':image_model if latest_image else None}
+    except:
+        context = {'form': form, 'latest_image':latest_image}
+        print(" No image")
+    
     return render(request, 'uploadandisplay/home.html', context)
