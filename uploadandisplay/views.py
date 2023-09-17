@@ -9,6 +9,14 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.base import ContentFile
 from ultralytics import YOLO
+import yaml
+
+yaml_file_path = '/media/dheeraj/New_Volume/Waterloo-Work/HTN/coco.yaml'
+with open(yaml_file_path, 'r') as file:
+    yaml_data = yaml.safe_load(file)
+
+# ROOT_DIR = 
+
 
 def get_yolo_output(results, images):
     for result, image in zip(results, images):
@@ -21,12 +29,15 @@ def get_yolo_output(results, images):
         # exit(0)
         # cv2.imshow('output_frame', img)
         # cv2.waitKey(0)
-        
+        class_num = boxes.cls.numpy()
+        class_name = yaml_data["names"][int(class_num)]
         boxes_arr = boxes.data.numpy()
         # print("boxes are :", boxes)
         # print(" boxes in numpy format are :", boxes_arr)
 
         top_left = (int(boxes_arr[0][0]), int(boxes_arr[0][1])) 
+        top_border_center = (top_left[0] + int(boxes_arr[0][2]/2), top_left[1])
+        # print(" top border center is : ", top_bord)
         # print(" top left is ", top_left)
 
         # bottom_right = boxes_arr[0][1] * img.shape[1] + boxes_arr[0][3] * img.shape[1]
@@ -34,6 +45,8 @@ def get_yolo_output(results, images):
         # print(" bottom right is ", bottom_right)
         
         image_with_rectangle = cv2.rectangle(img, top_left, bottom_right, (255, 0, 0), 2)
+        image_with_rectangle = cv2.putText(image_with_rectangle, class_name, top_border_center, cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 2)
+
         # cv2.imshow('output_frame', image_with_rectangle)
     return image_with_rectangle
     # cv2.waitKey(0)
