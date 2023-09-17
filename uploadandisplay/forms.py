@@ -4,3 +4,6 @@ class myform(forms.ModelForm):
     class Meta:
         model = ImageModel
         fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['Image'].label = ''

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,20 +12,20 @@
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
       crossorigin="anonymous"
     />
+    <link href="{% static '/design.css' %}" rel="stylesheet" />
 
     <title>upload/display</title>
-    {% comment %}
+
     <style>
       img {
-        width: 400px;
-        height: 400px;
+        width: 500px;
+        height: 500px;
       }
     </style>
-    {% endcomment %}
+
     <link href="design.css" rel="stylesheet" />
   </head>
   <body>
-   
     <div class="container py-4">
       <div class="text-center my-4">
         <div id="header">
@@ -36,23 +37,20 @@
         <h1 class="text-center">Upload Image</h1>
         <form action="" enctype="multipart/form-data" method="POST">
           {% csrf_token %} {{form}}
-          <input type="submit" value="Translate" class="styled" />
+          <input type="submit" value="Translate" />
         </form>
       </div>
       <div>
         {% if latest_image %}
-        <img
-          src="{{ latest_image.Image.url }}"
-          alt="{{
-        latest_image.description }}"
-        />
+        <img src="{{ latest_image.Image.url }}" alt="" />
         {% else %}
         <p>No image available.</p>
         {% endif %}
       </div>
+
       {% comment %}
       <li>
-        <a href="">{{ image.image.name }}</a>
+        <a href="">{{latest_image.Image.name }}</a>
       </li>
       {% endcomment %}
     </div>
