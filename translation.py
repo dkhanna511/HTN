@@ -263,7 +263,7 @@ can be fed directly into our model.
 
 from timeit import default_timer as timer
 NUM_EPOCHS = 50
-LOAD_MODEL = False
+git LOAD_MODEL = True
 SAVE_MODEL = True
 
 from torch.nn.utils.rnn import pad_sequence
@@ -422,7 +422,8 @@ def save_checkpoint(checkpoint, name= "translation_v2.pth.tar"):
     # optimizer.load_state_dict(checkpoint['state_dict'])
     print("SAVING CHECKPOINT")
     torch.save(checkpoint, name)
-
+if LOAD_MODEL:
+    load_checkpoint(torch.load("translation.pth.tar"))
 
 if not LOAD_MODEL:
     for epoch in range(1, NUM_EPOCHS+1):
@@ -434,11 +435,13 @@ if not LOAD_MODEL:
     
 
 
-else:
+def djago_evaluate(detected_word):
+    sentence = "This is a {}".format(detected_word)
     # model = torch.load()
-    load_checkpoint(torch.load("translation_v2.pth.tar"))
     
-    print(translate(transformer, ["This is a Dog.", "cat", "Person", "Man", "Girl", "Boy", "Hello", "Next Stop 10 kms away"]))
+    
+    output_text = translate(transformer, [sentence])
+    return output_text
 
 """## References
 
