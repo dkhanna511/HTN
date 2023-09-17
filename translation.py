@@ -424,21 +424,24 @@ def save_checkpoint(checkpoint, name= "translation_v2.pth.tar"):
     torch.save(checkpoint, name)
 
 
-if not LOAD_MODEL:
-    for epoch in range(1, NUM_EPOCHS+1):
-        start_time = timer()
-        train_loss = train_epoch(transformer, optimizer)
-        end_time = timer()
-        val_loss = evaluate(transformer)
-        print((f"Epoch: {epoch}, Train loss: {train_loss:.3f}, Val loss: {val_loss:.3f}, "f"Epoch time = {(end_time - start_time):.3f}s"))
-    
 
 
-else:
-    # model = torch.load()
+def training():
+    if not LOAD_MODEL:
+        for epoch in range(1, NUM_EPOCHS+1):
+            start_time = timer()
+            train_loss = train_epoch(transformer, optimizer)
+            end_time = timer()
+            val_loss = evaluate(transformer)
+            print((f"Epoch: {epoch}, Train loss: {train_loss:.3f}, Val loss: {val_loss:.3f}, "f"Epoch time = {(end_time - start_time):.3f}s"))
+        
+
+def evaluation_django(detected_word):
+        # model = torch.load()
+    sentence = ["This is a {}".format(detected_word)]
     load_checkpoint(torch.load("translation_v2.pth.tar"))
-    
-    print(translate(transformer, ["This is a Dog.", "cat", "Person", "Man", "Girl", "Boy", "Hello", "Next Stop 10 kms away"]))
+        
+    print(translate(transformer, sentence))
 
 """## References
 
