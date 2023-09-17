@@ -24,14 +24,15 @@
     <link href="design.css" rel="stylesheet" />
   </head>
   <body>
-    <div id="header">
-      <h1>Explore the World of Languages</h1>
-    </div>
-    <div id="intro">
-      <p>An immersive language learning experience for English to French</p>
-    </div>
+   
     <div class="container py-4">
       <div class="text-center my-4">
+        <div id="header">
+          <h1>Explore the World of Languages</h1>
+        </div>
+        <div id="intro">
+          <p>Immersive language learning experience for English to German</p>
+        </div>
         <h1 class="text-center">Upload Image</h1>
         <form action="" enctype="multipart/form-data" method="POST">
           {% csrf_token %} {{form}}
