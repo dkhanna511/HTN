@@ -16,12 +16,7 @@
 
     <title>upload/display</title>
 
-    <style>
-      img {
-        width: 500px;
-        height: 500px;
-      }
-    </style>
+    <style></style>
 
     <link href="design.css" rel="stylesheet" />
   </head>
@@ -34,13 +29,16 @@
         <div id="intro">
           <p>Immersive language learning experience for English to German</p>
         </div>
-        <h1 class="text-center">Upload Image</h1>
+        <h3 id="inst">Upload Image and Click Translate</h3>
         <form action="" enctype="multipart/form-data" method="POST">
           {% csrf_token %} {{form}}
           <input type="submit" value="Translate" />
         </form>
       </div>
-      <div>
+      <div class="result">
+        <h4>{{ wordE }}</h4> <h2>{{ wordE2 }}</h2>   <h2 id="dot">   .............    </h2> <h4>{{ wordG }}</h4> <h2>{{ wordG2 }}</h2></div>
+      </div>
+      <div class="image-container">
         {% if latest_image %}
         <img src="{{ latest_image.Image.url }}" alt="" />
         {% else %}

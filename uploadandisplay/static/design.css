@@ -1,7 +1,18 @@
 body {
-    width: 1512px;
-    height: 982px;
-    background: #5A7CAC;
+    /* background: #5A7CAC; */
+    background-image: linear-gradient(160deg, #5A7CAC, #F7CA18);
+}
+.image-container {
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+    height: 54vh; 
+    /* Optionally set a height to center vertically in the viewport */
+}
+
+.image-container img {
+    max-width: 100%; /* Ensure the image doesn't exceed the container width */
+    max-height: 100%; /* Ensure the image doesn't exceed the container height */
 }
 
 #header {
@@ -20,6 +31,20 @@ body {
     height: 64px; */
 
 
+}
+
+#inst {
+    /* flex-shrink: 0;
+    align-items: center;
+    justify-content: center; */
+    /* margin-left: 39em;
+    margin-top: 4em; */
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    /* font-weight: 50; */
+    line-height: normal;
 }
 
 #intro {
@@ -46,6 +71,34 @@ body {
     align-items: center;
     justify-content: center;
 
+}
+
+.result {
+    /* height:100%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h2{
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+    font-family: Monda;
+    font-size: 30px;
+}
+
+h4{
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+    font-family: Monda;
+}
+
+#dot {
+    color: #5A7CAC;;
 }
 
 .form-input {
