@@ -10,11 +10,18 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.base import ContentFile
 from ultralytics import YOLO
 import yaml
-import translation
+# import translation
+import sys
+import json
+sys.path.append("../")
+json_file ="english_german.json"
+
 yaml_file_path = '/media/dheeraj/New_Volume/Waterloo-Work/HTN/coco.yaml'
 with open(yaml_file_path, 'r') as file:
     yaml_data = yaml.safe_load(file)
 
+with open(json_file) as f:
+    json_data= json.load(f) 
 # ROOT_DIR = 
 
 
@@ -33,8 +40,14 @@ def get_yolo_output(results, images):
         class_num = boxes.cls.numpy()
         class_name = yaml_data["names"][int(class_num)]
         boxes_arr = boxes.data.numpy()
+        print(" class name is : ", class_name)
+        print("class name lower is :", class_name.lower())
+        print("json data is :", json_data[class_name.lower()])
+        output_sentence = ""
         # print("boxes are :", boxes)
-        output_sentence = translation.djago_evaluate(class_name)
+        if class_name.lower() in json_data:
+            output_sentence = json_data[class_name.lower()]
+        print("output sentence is : ", output_sentence)
         # print(" boxes in numpy format are :", boxes_arr)
 
         top_left = (int(boxes_arr[0][0]), int(boxes_arr[0][1])) 
@@ -50,7 +63,7 @@ def get_yolo_output(results, images):
         
         image_with_rectangle = cv2.rectangle(img, top_left, bottom_right, (255, 0, 0), 2)
         image_with_rectangle = cv2.putText(image_with_rectangle, class_name, top_border_center, cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 2)
-        image_with_rectangle = cv2.putText(image_with_rectangle, output_sentence, top_border_center, cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 2)
+        image_with_rectangle = cv2.putText(image_with_rectangle, output_sentence, bottom_border_center, cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 2)
 
         # cv2.imshow('output_frame', image_with_rectangle)
     return image_with_rectangle
